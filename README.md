@@ -7,10 +7,16 @@ This is an attempt at refactoring and porting a project that spanned nearly a ye
 Results have been more detailed than CoDiagnostix's proprietary internal segmentation and are able to be printed and fit a surgical guide with sub 200um resolution.
 \
 \
-Why is this on GitHub even though its barely complete?
-  => Because I had a close call nearly loosing a year of code when my laptop had a moment
-Ok but why is it public?
-  => Why not?
+**Small Q&A in case u come across this on GitHub** 
+\
+Why is this on GitHub even though its barely complete? 
+\
+*=> Because I had a close call nearly loosing a year of code when my laptop had a moment* 
+\
+Ok but why is it public? 
+\
+*=> Why not?* 
+\
 \
 \
 #Current API development:
@@ -29,6 +35,8 @@ Ok but why is it public?
 ```java
 sd4j sd = sd4j.loadSlice(new File("000"));
 System.out.println(sd.getPatientName());
+
+> Smith, Mr James
 ```
 \
 
