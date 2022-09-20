@@ -1,6 +1,7 @@
 package com.roundsToThree.Structures;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class DataElement {
 
@@ -10,7 +11,7 @@ public class DataElement {
     public int dataLength;
 
     // todo: Needs refactoring
-    public byte[] value;
+    public ArrayList<ItemElement> items;
 
     // Stored as shorts but returned as ints
     private final short groupNumber;
@@ -38,15 +39,21 @@ public class DataElement {
 
     // Returns a string with the tag identifier in hex, its value representation
     public String getSummary() {
-        String strc;
-        if (value == null || value.length < 2)
-            strc = "N/A";
-        else {
-            strc = (new String(value, StandardCharsets.UTF_8));
-            strc = strc.substring(0, Math.min(strc.length(), 32));
-            if (strc.length() == 32 && value.length > 32)
-                strc += "...";
-        }
+        String strc = items.size() + " Item(s)";
+        if (items == null)
+            strc = "No Items";
+        else
+            for (ItemElement item : items) {
+
+                if (item.value == null || item.value.length < 2)
+                    strc += "\n    => N/A";
+                else {
+                    String str = (new String(item.value, StandardCharsets.UTF_8));
+                    strc += "\n    => " + str.substring(0, Math.min(str.length(), 32));
+                    if (strc.length() == 32 && item.value.length > 32)
+                        strc += "...";
+                }
+            }
 
 
         return "(" + String.format("%04x", groupNumber) + "," + String.format("%04x", elementNumber) + ") => " + strc;

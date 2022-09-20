@@ -6,9 +6,10 @@ import com.roundsToThree.Structures.DataElement;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class sd4j {
-    public DataElement[] elements;
+    public ArrayList<DataElement> elements;
 
     private sd4j() {
     }

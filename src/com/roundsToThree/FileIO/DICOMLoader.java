@@ -3,11 +3,11 @@ package com.roundsToThree.FileIO;
 import com.roundsToThree.DataProcessing.ByteUtils;
 import com.roundsToThree.Exception.InvalidFileException;
 import com.roundsToThree.Structures.DataElement;
+import com.roundsToThree.Structures.ItemElement;
 import com.roundsToThree.Structures.ValueRepresentation;
 import com.roundsToThree.sd4j;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -74,23 +74,25 @@ public class DICOMLoader {
             }
 
             //println(str(char((int)tag.valueRepresentation[0])) + str(char((int)tag.valueRepresentation[1])));
-
+            byte[] value;
             // Determine if length is explicitly defined
             if (tag.dataLength == -1 && (tagType == VR_ONLY || tagType == LENGTH_ONLY)) {
                 // Undefined length
                 // Read data until the end of the tag
                 // End of an undefined length tag is marked by the sequence
                 // 0x FEFF DDE0 0000 0000 (SEQUENCE_DELIMINATOR)
-                tag.value = getBytesUntilDeliminator(buffered_reader, SEQUENCE_DELIMINATOR);
+                // Also convert the read data into ItemElements
+                tag.items = ItemElement.itemElementsFromDataElement(tag.valueRepresentation, getBytesUntilDeliminator(buffered_reader, SEQUENCE_DELIMINATOR));
             } else {
                 // Assume a determined length
-                tag.value = buffered_reader.readNBytes(tag.dataLength);
+                // Convert the binary data into ItemElements
+                tag.items = ItemElement.itemElementsFromDataElement(tag.valueRepresentation, buffered_reader.readNBytes(tag.dataLength));
             }
             System.out.println(tag.getSummary());
             tags.add(tag);
         }
 
-
+        sd.elements = tags;
         buffered_reader.close();
     }
 
@@ -142,43 +144,6 @@ public class DICOMLoader {
     }
 
 
-    static final byte[][] valueRepresentations = {
-            {'A', 'E'}, // Application Entity - Up to 16 Bytes - Ignore trailing/leading 0x20, disregard only 0x20 packets
-            {'A', 'S'}, // Age String         - 4 Bytes        - AAAB A = (number) B = (D)ay, (W)eek, (M)onths, (Y)ears
-            {'A', 'T'}, // Attribute Tag      - 4 Bytes        - Data Element tags in Little-Endian order (0018) = 18 00
-            {'C', 'S'},
-            {'D', 'A'},
-            {'D', 'S'},
-            {'D', 'T'},
-            {'F', 'L'},
-            {'F', 'D'},
-            {'I', 'S'},
-            {'L', 'O'},
-            {'L', 'T'},
-            {'O', 'B'},
-            {'O', 'D'},
-            {'O', 'F'},
-            {'O', 'L'},
-            {'O', 'V'},
-            {'O', 'W'},
-            {'P', 'N'},
-            {'S', 'H'},
-            {'S', 'L'},
-            {'S', 'S'},
-            {'S', 'Q'},
-            {'S', 'T'},
-            {'S', 'V'},
-            {'T', 'M'},
-            {'U', 'C'},
-            {'U', 'I'},
-            {'U', 'L'},
-            {'U', 'N'},
-            {'U', 'R'},
-            {'U', 'S'},
-            {'U', 'T'},
-            {'U', 'V'}
-    };
-
     // Value representations specific to the second structure of the DICOM tag specification
 // See dicom.nema.org => PS3.5, Table 7.1-2
     static final byte[][] structureTwoExplicitVRs = {
@@ -208,7 +173,7 @@ public class DICOMLoader {
     // What a tag of undefined length is terminated with
     static final byte[] SEQUENCE_DELIMINATOR = {(byte) 0xFE, (byte) 0xFF, (byte) 0xDD, (byte) 0xE0, 0x00, 0x00, 0x00, 0x00};
     // What an item of undefined length in a tag os terminated with
-    final byte[] ITEM_DELIMINATOR = {(byte) 0xFE, (byte) 0xFF, (byte) 0x0D, (byte) 0xE0, 0x00, 0x00, 0x00, 0x00};
+    public static final byte[] ITEM_DELIMINATOR = {(byte) 0xFE, (byte) 0xFF, (byte) 0x0D, (byte) 0xE0, 0x00, 0x00, 0x00, 0x00};
 
 
     // The three types of tag formats
@@ -256,38 +221,12 @@ public class DICOMLoader {
         if (vr.length != 2)
             return false;
 
-        for (byte[] valueRepresentation : valueRepresentations)
+        for (byte[] valueRepresentation : ValueRepresentation.valueRepresentations)
             if (Arrays.equals(vr, valueRepresentation))
                 return true;
 
         return false;
     }
 
-//
-//    // Returns the point in a byte array that another byte array exists
-//// takes a source, array to check for, and an index to start at
-//    int indexOfByteSequence(byte[] data, byte[] sequence, int start) {
-//        int index = start;
-//
-//
-//        // Create a search buffer the size of the sequence
-//        int searchLength = sequence.length;
-//        byte[] search = new byte[searchLength];
-//        System.arraycopy(data, start, search, 0, searchLength);
-//
-//        // While the search buffer is not equal to the sequence, check the next byte
-//        while (!Arrays.equals(search, sequence)) {
-//            // Shift the contents of the array and and another byte from the data to it
-//            System.arraycopy(search, 1, search, 0, searchLength - 1);
-//            search[searchLength - 1] = data[index + searchLength];
-//
-//            index++;
-//
-//            if (index + searchLength > data.length)
-//                return -1;
-//        }
-//
-//        return index;
-//    }
 
 }

@@ -119,6 +119,43 @@ public class ValueRepresentation {
             {VR_UV, false, "Unsigned Very Long (64-bit)"},
             {VR_IMPLICIT, false, "Implicit VR"}
     };
+
+    public static final byte[][] valueRepresentations = {
+            {'A', 'E'}, // Application Entity - Up to 16 Bytes - Ignore trailing/leading 0x20, disregard only 0x20 packets
+            {'A', 'S'}, // Age String         - 4 Bytes        - AAAB A = (number) B = (D)ay, (W)eek, (M)onths, (Y)ears
+            {'A', 'T'}, // Attribute Tag      - 4 Bytes        - Data Element tags in Little-Endian order (0018) = 18 00
+            {'C', 'S'},
+            {'D', 'A'},
+            {'D', 'S'},
+            {'D', 'T'},
+            {'F', 'L'},
+            {'F', 'D'},
+            {'I', 'S'},
+            {'L', 'O'},
+            {'L', 'T'},
+            {'O', 'B'},
+            {'O', 'D'},
+            {'O', 'F'},
+            {'O', 'L'},
+            {'O', 'V'},
+            {'O', 'W'},
+            {'P', 'N'},
+            {'S', 'H'},
+            {'S', 'L'},
+            {'S', 'S'},
+            {'S', 'Q'},
+            {'S', 'T'},
+            {'S', 'V'},
+            {'T', 'M'},
+            {'U', 'C'},
+            {'U', 'I'},
+            {'U', 'L'},
+            {'U', 'N'},
+            {'U', 'R'},
+            {'U', 'S'},
+            {'U', 'T'},
+            {'U', 'V'}
+    };
 }
 
 
