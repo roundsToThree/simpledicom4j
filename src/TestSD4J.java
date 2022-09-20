@@ -15,7 +15,7 @@ public class TestSD4J {
         try {
 //            FileInputStream read = new FileInputStream(new File("000"));
             sd4j sd = sd4j.loadSlice(new File("000"));
-
+            System.out.println(sd.getPatientName());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,14 +2,16 @@ package com.roundsToThree;
 
 import com.roundsToThree.Exception.InvalidFileException;
 import com.roundsToThree.FileIO.DICOMLoader;
+import com.roundsToThree.Representations.PersonRepresentation;
 import com.roundsToThree.Structures.DataElement;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class sd4j {
-    public ArrayList<DataElement> elements;
+    public HashMap<Integer, DataElement> elements;
 
     private sd4j() {
     }
@@ -41,8 +43,16 @@ public class sd4j {
     }
 
     // Returns an element given an group and element number
-    public DataElement getElementsByTagNumber(int groupNumber, int elementNumber) {
-        return null;
+    public DataElement getElementByTagNumber(int groupNumber, int elementNumber) {
+        int ind = (int) ((groupNumber << 16) | (elementNumber & 0xFF));
+        return elements.get(ind);
     }
 
+    public PersonRepresentation getPatientName() {
+        DataElement patientName = getElementByTagNumber(0x0010, 0x0010);
+        if (patientName == null || patientName.items == null || patientName.items.size() == 0)
+            return null;
+
+        return new PersonRepresentation(patientName.items.get(0).value);
+    }
 }

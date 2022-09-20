@@ -10,6 +10,7 @@ import com.roundsToThree.sd4j;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 public class DICOMLoader {
@@ -28,7 +29,7 @@ public class DICOMLoader {
         }
 
         // Read rest of file
-        ArrayList<DataElement> tags = new ArrayList<>();
+        HashMap<Integer, DataElement> tags = new HashMap<>();
         // Start from byte 132
         while (buffered_reader.available() > 0) {
 
@@ -52,20 +53,20 @@ public class DICOMLoader {
             int tagType = getTagType(tagStructure);
             switch (tagType) {
                 case VR_ONLY -> {
-                    System.out.println("Tag Type: VR_ONLY");
+//                    System.out.println("Tag Type: VR_ONLY");
                     tag.valueRepresentation = ValueRepresentation.getRepresentationFromBytes(Arrays.copyOf(tagStructure, 2));
 
                     // Next 4 bytes are then just the length
                     tag.dataLength = (int) ByteUtils.longFrom32Bit(buffered_reader.readNBytes(4));
                 }
                 case VR_AND_LENGTH -> {
-                    System.out.println("Tag Type: VR_AND_LENGTH");
+//                    System.out.println("Tag Type: VR_AND_LENGTH");
                     tag.valueRepresentation = ValueRepresentation.getRepresentationFromBytes(Arrays.copyOf(tagStructure, 2));
                     // Next 2 bytes are then just the length
                     tag.dataLength = ByteUtils.intFrom16Bit(Arrays.copyOfRange(tagStructure, 2, 4));
                 }
                 case LENGTH_ONLY -> {
-                    System.out.println("Tag Type: LENGTH_ONLY");
+//                    System.out.println("Tag Type: LENGTH_ONLY");
 
                     // tagStructure is implicit, should be handled when converting the value of the tag.
                     // Note here that dataLength should be typecast to long when used
@@ -89,7 +90,10 @@ public class DICOMLoader {
                 tag.items = ItemElement.itemElementsFromDataElement(tag.valueRepresentation, buffered_reader.readNBytes(tag.dataLength));
             }
             System.out.println(tag.getSummary());
-            tags.add(tag);
+
+            // Push it to the hashmap (index is the groupNo. elemnetNo.)
+            int ind = (int) ((groupNumber << 16) | (elementNumber & 0xFF));
+            tags.put(ind, tag);
         }
 
         sd.elements = tags;

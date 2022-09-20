@@ -2,6 +2,7 @@ package com.roundsToThree.Structures;
 
 import com.roundsToThree.DataProcessing.ByteUtils;
 import com.roundsToThree.FileIO.DICOMLoader;
+import com.roundsToThree.Representations.PersonRepresentation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,9 @@ public class ItemElement {
             item.value = data;
             items.add(item);
         }
+
+        if (vr.valueRepresentation == ValueRepresentation.VR_PN)
+            System.out.println(new PersonRepresentation(data).toString());
 
         return items;
 
