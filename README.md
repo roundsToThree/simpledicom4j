@@ -1,5 +1,5 @@
 # simpledicom4j
-A simple DICOM CBCT viewer
+A simple DICOM CBCT API
 
 ## !!! Currently in VERY early development NOT FOR MEDICAL USE (yet) !!!
 
