@@ -1,6 +1,7 @@
 package com.roundsToThree.Representations;
 
 import com.roundsToThree.DataProcessing.ByteUtils;
+import com.roundsToThree.Structures.ValueRepresentation;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -33,6 +34,14 @@ public class DateTimeRepresentation extends Representation {
 
     // Class specific variables
     public ZonedDateTime dateTime;
+
+    // The Value Representation of this class
+    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DT;
+
+    @Override
+    public ValueRepresentation getValueRepresentation() {
+        return valueRepresentation;
+    }
 
     // Converts raw DateTime value into a easier to use format
     public DateTimeRepresentation(byte[] data) {
@@ -105,6 +114,7 @@ public class DateTimeRepresentation extends Representation {
         );
     }
 
+    @Override
     public String toString() {
         return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss.SSSSSSa ZZZZ"));
     }
