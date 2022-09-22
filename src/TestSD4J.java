@@ -1,18 +1,7 @@
-import com.roundsToThree.DataProcessing.ByteUtils;
-import com.roundsToThree.FileIO.DICOMLoader;
-import com.roundsToThree.Representations.DateRepresentation;
-import com.roundsToThree.Representations.DateTimeRepresentation;
 import com.roundsToThree.Representations.SequenceRepresentation;
-import com.roundsToThree.Structures.ItemElement;
-import com.roundsToThree.Structures.ValueRepresentation;
 import com.roundsToThree.sd4j;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class TestSD4J {
@@ -34,7 +23,7 @@ public class TestSD4J {
 //                System.out.format("%x%x%x%x %c%c%c%c\n", bb[i], bb[i + 1], bb[i + 2], bb[i + 3], bb[i], bb[i + 1], bb[i + 2], bb[i + 3]);
 //            }
             SequenceRepresentation sq = new SequenceRepresentation();
-            sq.elements = sd.elements2;
+            sq.elements = sd.elements;
             System.out.println(sq);
         } catch (Exception e) {
             e.printStackTrace();

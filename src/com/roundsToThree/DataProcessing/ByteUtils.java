@@ -1,5 +1,8 @@
 package com.roundsToThree.DataProcessing;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HexFormat;
 
@@ -65,5 +68,31 @@ public class ByteUtils {
 
     public static String byteArrayToHexString(byte[] data) {
         return HexFormat.of().formatHex(data);
+    }
+
+    public static byte[] getBytesUntilDeliminator(BufferedInputStream buffered_reader, byte[] sequenceDeliminator) {
+        // Create a buffer to fill and check
+        int searchLength = sequenceDeliminator.length;
+        byte[] search = new byte[searchLength];
+
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while (buffered_reader.available() > 0) {
+
+                byte b = (byte) buffered_reader.read();
+                baos.write(b);
+
+                // Shift the search array to the left
+                System.arraycopy(search, 1, search, 0, searchLength - 1);
+                search[searchLength - 1] = b;
+
+                if (Arrays.equals(search, sequenceDeliminator))
+                    return baos.toByteArray();
+
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return null;
     }
 }
