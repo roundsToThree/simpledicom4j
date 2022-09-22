@@ -3,9 +3,7 @@ package com.roundsToThree.FileIO;
 import com.roundsToThree.DataProcessing.ByteUtils;
 import com.roundsToThree.Exception.CorruptSequenceException;
 import com.roundsToThree.Exception.InvalidFileException;
-import com.roundsToThree.Representations.PersonRepresentation;
-import com.roundsToThree.Representations.Representation;
-import com.roundsToThree.Representations.SequenceRepresentation;
+import com.roundsToThree.Representations.*;
 import com.roundsToThree.Structures.FileArchitecture;
 import com.roundsToThree.Structures.ValueRepresentation;
 import com.roundsToThree.sd4j;
@@ -167,6 +165,12 @@ public class DICOMLoader {
         switch (valueRepresentation.VRCode) {
             case ValueRepresentation.VR_PN -> {
                 return new PersonRepresentation(value);
+            }
+            case ValueRepresentation.VR_DT -> {
+                return new DateTimeRepresentation(value);
+            }
+            case ValueRepresentation.VR_DA -> {
+                return new DateRepresentation(value);
             }
             default -> {
                 // No Value Representation implemented for this VR type yet
