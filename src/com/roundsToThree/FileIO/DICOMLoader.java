@@ -92,7 +92,7 @@ public class DICOMLoader {
             System.out.println(tag.getSummary());
 
             // Push it to the hashmap (index is the groupNo. elemnetNo.)
-            int ind = (int) ((groupNumber << 16) | (elementNumber & 0xFF));
+            int ind = (int) ((groupNumber << 16) | (elementNumber & 0xFFFF));
             tags.put(ind, tag);
         }
 
@@ -129,15 +129,10 @@ public class DICOMLoader {
     // Given the first 132 bytes of a file, determines whether it is actually a  DICOM file
     static boolean containsDICOMHeader(byte[] data) {
       /*
-      DICOM begins with 128 NULL bytes then "DICM"
+      DICOM begins with 128 arbitrary bytes then "DICM"
        */
         if (data.length < 132)
             return false;
-
-        for (int b = 0; b < 128; b++)
-            if (data[b] != 0)
-                return false;
-
 
         // Check DICM
         return

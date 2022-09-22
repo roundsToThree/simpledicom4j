@@ -56,6 +56,6 @@ public class DataElement {
             }
 
 
-        return "(" + String.format("%04x", groupNumber) + "," + String.format("%04x", elementNumber) + ") => " + strc;
+        return String.format("(%04X,%04X) Type: %s  => %s", groupNumber, elementNumber, valueRepresentation.toDetailedString(), strc);
     }
 }

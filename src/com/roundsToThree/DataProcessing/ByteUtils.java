@@ -45,5 +45,21 @@ public class ByteUtils {
         return index;
     }
 
+    // Takes a char array and converts it to a number:
+    // E.g: '1','0'  to 10
+
+    public static long convertCharactersToLong(byte[] data) {
+        if (data == null || data.length == 0)
+            return 0;
+        long returnVal = 0;
+        byte sign = ((data[0] == (byte) '-') ? (byte) -1 : 1);
+        long scale = 1;
+        for (int i = data.length - 1; i >= (sign == -1 ? 1 : 0); i--) {
+            returnVal += sign * (data[i] - '0') * scale;
+            scale *= 10;
+        }
+
+        return returnVal;
+    }
 
 }

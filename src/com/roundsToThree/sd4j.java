@@ -2,6 +2,7 @@ package com.roundsToThree;
 
 import com.roundsToThree.Exception.InvalidFileException;
 import com.roundsToThree.FileIO.DICOMLoader;
+import com.roundsToThree.Representations.DateTimeRepresentation;
 import com.roundsToThree.Representations.PersonRepresentation;
 import com.roundsToThree.Structures.DataElement;
 
@@ -44,7 +45,7 @@ public class sd4j {
 
     // Returns an element given an group and element number
     public DataElement getElementByTagNumber(int groupNumber, int elementNumber) {
-        int ind = (int) ((groupNumber << 16) | (elementNumber & 0xFF));
+        int ind = (int) ((groupNumber << 16) | (elementNumber & 0xFFFF));
         return elements.get(ind);
     }
 
@@ -55,4 +56,24 @@ public class sd4j {
 
         return new PersonRepresentation(patientName.items.get(0).value);
     }
+
+
+    public DateTimeRepresentation getAquisitionDate() {
+        return null;
+    }
+
+    public DateTimeRepresentation getAquisitionTime() {
+        return null;
+    }
+
+    /*
+
+        Gets the date and time the image acquisition started
+
+    (0008,002A)
+     */
+    public DateTimeRepresentation getAquisitionDateTime() {
+        return null;
+    }
+
 }
