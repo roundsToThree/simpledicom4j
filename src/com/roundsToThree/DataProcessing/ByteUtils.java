@@ -1,6 +1,10 @@
 package com.roundsToThree.DataProcessing;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HexFormat;
 
 // Aids in the conversion of byte arrays
 public class ByteUtils {
@@ -45,5 +49,50 @@ public class ByteUtils {
         return index;
     }
 
+    // Takes a char array and converts it to a number:
+    // E.g: '1','0'  to 10
 
+    public static long convertCharactersToLong(byte[] data) {
+        if (data == null || data.length == 0)
+            return 0;
+        long returnVal = 0;
+        byte sign = ((data[0] == (byte) '-') ? (byte) -1 : 1);
+        long scale = 1;
+        for (int i = data.length - 1; i >= (sign == -1 ? 1 : 0); i--) {
+            returnVal += sign * (data[i] - '0') * scale;
+            scale *= 10;
+        }
+
+        return returnVal;
+    }
+
+    public static String byteArrayToHexString(byte[] data) {
+        return HexFormat.of().formatHex(data);
+    }
+
+    public static byte[] getBytesUntilDeliminator(BufferedInputStream buffered_reader, byte[] sequenceDeliminator) {
+        // Create a buffer to fill and check
+        int searchLength = sequenceDeliminator.length;
+        byte[] search = new byte[searchLength];
+
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while (buffered_reader.available() > 0) {
+
+                byte b = (byte) buffered_reader.read();
+                baos.write(b);
+
+                // Shift the search array to the left
+                System.arraycopy(search, 1, search, 0, searchLength - 1);
+                search[searchLength - 1] = b;
+
+                if (Arrays.equals(search, sequenceDeliminator))
+                    return baos.toByteArray();
+
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return null;
+    }
 }
