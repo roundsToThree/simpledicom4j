@@ -2,8 +2,10 @@ package com.roundsToThree;
 
 import com.roundsToThree.Exception.InvalidFileException;
 import com.roundsToThree.FileIO.DICOMLoader;
+import com.roundsToThree.FileIO.DICOMLoader2;
 import com.roundsToThree.Representations.DateTimeRepresentation;
 import com.roundsToThree.Representations.PersonRepresentation;
+import com.roundsToThree.Representations.Representation;
 import com.roundsToThree.Structures.DataElement;
 
 import java.io.File;
@@ -13,6 +15,7 @@ import java.util.HashMap;
 
 public class sd4j {
     public HashMap<Integer, DataElement> elements;
+    public HashMap<Integer, Representation> elements2;
 
     private sd4j() {
     }
@@ -25,7 +28,7 @@ public class sd4j {
 
         // Read the file
         try {
-            DICOMLoader.loadDICOMSliceFromFile(simpledicom, sliceFile);
+            DICOMLoader2.loadDICOMSliceFromFile(simpledicom, sliceFile);
         } catch (IOException e) {
             System.out.print("Failed to load DICOM file " + sliceFile.getAbsolutePath() + ", IO Exception: ");
             System.out.println(e.getMessage());

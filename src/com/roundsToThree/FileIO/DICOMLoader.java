@@ -100,7 +100,7 @@ public class DICOMLoader {
         buffered_reader.close();
     }
 
-    private static byte[] getBytesUntilDeliminator(BufferedInputStream buffered_reader, byte[] sequenceDeliminator) {
+    public static byte[] getBytesUntilDeliminator(BufferedInputStream buffered_reader, byte[] sequenceDeliminator) {
         // Create a buffer to fill and check
         int searchLength = sequenceDeliminator.length;
         byte[] search = new byte[searchLength];
@@ -220,9 +220,9 @@ public class DICOMLoader {
         if (vr.length != 2)
             return false;
 
-        for (byte[] valueRepresentation : ValueRepresentation.valueRepresentations)
-            if (Arrays.equals(vr, valueRepresentation))
-                return true;
+//        for (byte[] valueRepresentation : ValueRepresentation.valueRepresentations)
+//            if (Arrays.equals(vr, valueRepresentation))
+//                return true;
 
         return false;
     }

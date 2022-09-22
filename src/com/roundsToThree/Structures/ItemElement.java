@@ -6,16 +6,19 @@ import com.roundsToThree.Representations.PersonRepresentation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ItemElement {
 
-    private ItemElement() {
+    public ItemElement() {
     }
 
     ;
 
     // Class specific variables
     public byte[] value;
+    public HashMap<Integer, DataElement> tags;
+
 
     // Converts the raw binary value in a data element into readable content
     public static ArrayList<ItemElement> itemElementsFromDataElement(ValueRepresentation vr, byte[] data) {
@@ -23,7 +26,7 @@ public class ItemElement {
         ArrayList<ItemElement> items = new ArrayList<>();
 
         // The value is a sequence of elements
-        if (vr.valueRepresentation == ValueRepresentation.VR_SQ) {
+        if (vr.VRCode == ValueRepresentation.VR_SQ) {
             // Where the current cursor is in the data
             int index = 0;
             while (index < data.length) {
@@ -59,7 +62,7 @@ public class ItemElement {
             items.add(item);
         }
 
-        if (vr.valueRepresentation == ValueRepresentation.VR_PN)
+        if (vr.VRCode == ValueRepresentation.VR_PN)
             System.out.println(new PersonRepresentation(data).toString());
 
         return items;

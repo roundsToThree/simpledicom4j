@@ -1,9 +1,14 @@
 package com.roundsToThree.Representations;
 
+import com.roundsToThree.Structures.ValueRepresentation;
+
 import java.nio.charset.StandardCharsets;
 
-public class PersonRepresentation {
+public class PersonRepresentation extends Representation {
     // Value Representation VR_PN
+
+    // Value Representation of this class
+    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_PN;
 
     public String familyName;
     public String givenName;
@@ -48,6 +53,10 @@ public class PersonRepresentation {
             suffix = segments[4];
     }
 
+    @Override
+    public ValueRepresentation getValueRepresentation() {
+        return valueRepresentation;
+    }
 
     @Override
     public String toString() {

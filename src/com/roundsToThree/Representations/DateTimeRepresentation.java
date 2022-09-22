@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-public class DateTimeRepresentation {
+public class DateTimeRepresentation extends Representation {
     /*
         Data is stored like this
         YYYYMMDDHHMMSS.FFFFFF&ZZXX

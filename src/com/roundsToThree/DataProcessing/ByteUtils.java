@@ -1,6 +1,7 @@
 package com.roundsToThree.DataProcessing;
 
 import java.util.Arrays;
+import java.util.HexFormat;
 
 // Aids in the conversion of byte arrays
 public class ByteUtils {
@@ -62,4 +63,7 @@ public class ByteUtils {
         return returnVal;
     }
 
+    public static String byteArrayToHexString(byte[] data) {
+        return HexFormat.of().formatHex(data);
+    }
 }

@@ -9,6 +9,7 @@ public class DataElement {
     public ValueRepresentation valueRepresentation;
     // dataLength may be a 32bit uint so ensure it corrected for when used.
     public int dataLength;
+    public byte[] value;
 
     // todo: Needs refactoring
     public ArrayList<ItemElement> items;

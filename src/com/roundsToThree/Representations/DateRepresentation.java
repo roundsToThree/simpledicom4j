@@ -1,4 +1,4 @@
 package com.roundsToThree.Representations;
 
-public class DateRepresentation {
+public class DateRepresentation extends Representation {
 }
