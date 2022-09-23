@@ -64,6 +64,7 @@ public class DICOMLoader {
                 data = reader.readNBytes(2);
                 int elementNumber = ByteUtils.intFrom16Bit(data);
 
+                System.out.format("%04x, %04x\n", groupNumber, elementNumber);
 
                 // If reading has reached the end of a sequence item, this will break out of it
                 if (
@@ -175,21 +176,28 @@ public class DICOMLoader {
             case ValueRepresentation.VR_AT -> {
                 return new AttributeTagRepresentation(value);
             }
-
-            case ValueRepresentation.VR_PN -> {
-                return new PersonRepresentation(value);
-            }
-            case ValueRepresentation.VR_DT -> {
-                return new DateTimeRepresentation(value);
+            case ValueRepresentation.VR_CS -> {
+                return new CodeStringRepresentation(value);
             }
             case ValueRepresentation.VR_DA -> {
                 return new DateRepresentation(value);
             }
+            case ValueRepresentation.VR_DS -> {
+                return new DecimalStringRepresentation(value);
+            }
+            case ValueRepresentation.VR_DT -> {
+                return new DateTimeRepresentation(value);
+            }
+            case ValueRepresentation.VR_FL -> {
+                return new FloatSingleRepresentation(value);
+            }
+            case ValueRepresentation.VR_PN -> {
+                return new PersonRepresentation(value);
+            }
+
+
             case ValueRepresentation.VR_TM -> {
                 return new TimeRepresentation(value);
-            }
-            case ValueRepresentation.VR_CS -> {
-                return new CodeStringRepresentation(value);
             }
 
             default -> {

@@ -3,6 +3,8 @@ package com.roundsToThree.DataProcessing;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.HexFormat;
 
@@ -95,4 +97,11 @@ public class ByteUtils {
         }
         return null;
     }
+
+    // Get an IEE 754 Float from a sequence of 4 bytes
+    public static float floatFrom32Bit(byte[] data) {
+        // Method from https://stackoverflow.com/a/13469763
+        return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+    }
+
 }
