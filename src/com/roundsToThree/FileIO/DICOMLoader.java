@@ -172,6 +172,9 @@ public class DICOMLoader {
             case ValueRepresentation.VR_DA -> {
                 return new DateRepresentation(value);
             }
+            case ValueRepresentation.VR_TM -> {
+                return new TimeRepresentation(value);
+            }
             default -> {
                 // No Value Representation implemented for this VR type yet
                 Representation r = new Representation();
