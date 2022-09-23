@@ -172,6 +172,10 @@ public class DICOMLoader {
             case ValueRepresentation.VR_AS -> {
                 return new AgeStringRepresentation(value);
             }
+            case ValueRepresentation.VR_AT -> {
+                return new AttributeTagRepresentation(value);
+            }
+
             case ValueRepresentation.VR_PN -> {
                 return new PersonRepresentation(value);
             }
