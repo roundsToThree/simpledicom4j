@@ -163,6 +163,9 @@ public class DICOMLoader {
     // Converts a value representation and contents of a tag into a formatted Representations.* class
     private static Representation createRepresentationFromTag(ValueRepresentation valueRepresentation, byte[] value) {
         switch (valueRepresentation.VRCode) {
+            case ValueRepresentation.VR_AE -> {
+                return new ApplicationEntityRepresentation(value);
+            }
             case ValueRepresentation.VR_PN -> {
                 return new PersonRepresentation(value);
             }
