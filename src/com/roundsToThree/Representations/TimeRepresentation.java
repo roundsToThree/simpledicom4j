@@ -18,6 +18,7 @@ public class TimeRepresentation extends Representation {
 
     // Format : HHMMSS.FFFFFF
     // Note: each value apart from hour may be excluded. If microseconds are excluded, there is no '.'
+    // Convert byte array (of the format in VR_TM) into a TimeRepresentation class
     public TimeRepresentation(byte[] data) {
         // Values are stored in text form so convert the byte array to text
         String time = new String(data, StandardCharsets.UTF_8).trim();
