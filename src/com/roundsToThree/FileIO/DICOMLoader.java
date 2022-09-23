@@ -63,12 +63,15 @@ public class DICOMLoader {
                 // Get the element number
                 data = reader.readNBytes(2);
                 int elementNumber = ByteUtils.intFrom16Bit(data);
-                bytesRead += 2;
+
 
                 // If reading has reached the end of a sequence item, this will break out of it
-                if (groupNumber == 0xfffe && elementNumber == 0xe00d)
+                if (
+                        (groupNumber == 0xfffe && elementNumber == 0xe00d) ||
+                                // Or if there is a weird exception with both tags = 0
+                                (groupNumber == 0 && elementNumber == 0)
+                )
                     return bytesRead;
-
                 // Create a new tag to fill
 //                DataElement tag = new DataElement(groupNumber, elementNumber);
 
@@ -165,6 +168,9 @@ public class DICOMLoader {
         switch (valueRepresentation.VRCode) {
             case ValueRepresentation.VR_AE -> {
                 return new ApplicationEntityRepresentation(value);
+            }
+            case ValueRepresentation.VR_AS -> {
+                return new AgeStringRepresentation(value);
             }
             case ValueRepresentation.VR_PN -> {
                 return new PersonRepresentation(value);

@@ -16,6 +16,9 @@ public class CodeStringRepresentation extends Representation {
 
     // Convert byte array of format VR_CS into a CodeStringRepresentation
     public CodeStringRepresentation(byte[] data) {
+        if (data == null || data.length == 0)
+            return;
+
         // Convert the data to a string (and trim trailing/leading spaces
         value = new String(data, StandardCharsets.UTF_8).trim();
 

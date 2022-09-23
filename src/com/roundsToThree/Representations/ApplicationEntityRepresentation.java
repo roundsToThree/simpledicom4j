@@ -11,10 +11,12 @@ public class ApplicationEntityRepresentation extends Representation {
     public String value;
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_TM;
+    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_AE;
 
     // Convert an array of bytes into a VR_AE representation
     public ApplicationEntityRepresentation(byte[] data) {
+        if (data == null || data.length == 0)
+            return;
         // Convert the data to a string (and trim trailing/leading spaces
         value = new String(data, StandardCharsets.UTF_8).trim();
 
