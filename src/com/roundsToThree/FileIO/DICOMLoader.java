@@ -191,6 +191,12 @@ public class DICOMLoader {
             case ValueRepresentation.VR_FL -> {
                 return new FloatSingleRepresentation(value);
             }
+            case ValueRepresentation.VR_FD -> {
+                return new FloatDoubleRepresentation(value);
+            }
+            case ValueRepresentation.VR_IS -> {
+                return new IntegerStringRepresentation(value);
+            }
             case ValueRepresentation.VR_PN -> {
                 return new PersonRepresentation(value);
             }

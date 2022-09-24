@@ -26,7 +26,7 @@ public class DecimalStringRepresentation extends Representation {
         String[] numbers = text.split("\\\\");
         values = new double[numbers.length];
         for (int i = 0; i < numbers.length; i++)
-            values[i] = Double.parseDouble(numbers[i]);
+            values[i] = Double.parseDouble(numbers[i].trim());
     }
 
     @Override
