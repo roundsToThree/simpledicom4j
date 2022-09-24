@@ -104,4 +104,9 @@ public class ByteUtils {
         return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat();
     }
 
+    // Get an IEE 754 Float from a sequence of 8 bytes
+    public static double doubleFrom64Bit(byte[] data) {
+        return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+    }
+
 }
