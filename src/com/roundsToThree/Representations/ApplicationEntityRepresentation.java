@@ -49,19 +49,27 @@ public class ApplicationEntityRepresentation extends Representation {
 
     @Override
     public String toString() {
+        // No value
         if (value == null || value.length == 0)
             return "N/A";
-        if (value.length == 1)
+
+        // One value
+        if (value.length == 1 && value[0] != null)
             return value[0].toString();
 
-        // Otherwise is array
+        // Multiple values
         StringBuilder returnStr = new StringBuilder("[");
         for (int i = 0; i < value.length; i++) {
+            if (value[i] == null)
+                continue;
+
+            // Prepend a comma if it's not the first item in the array
             if (i != 0)
-                returnStr.append(",");
+                returnStr.append(", ");
 
             returnStr.append(value[i].toString());
         }
-        return returnStr.append("]").toString();
+        returnStr.append("]");
+        return returnStr.toString();
     }
 }

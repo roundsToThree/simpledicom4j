@@ -39,16 +39,20 @@ public class AttributeTagRepresentation extends Representation {
 
     @Override
     public String toString() {
-        // No values
+        // No value
         if (value == null || value.length == 0)
             return "N/A";
+
         // One value
-        if (value.length == 1)
+        if (value.length == 1 && value[0] != null)
             return value[0].toString();
 
         // Multiple values
         StringBuilder returnStr = new StringBuilder("[");
         for (int i = 0; i < value.length; i++) {
+            if (value[i] == null)
+                continue;
+
             // Prepend a comma if it's not the first item in the array
             if (i != 0)
                 returnStr.append(", ");

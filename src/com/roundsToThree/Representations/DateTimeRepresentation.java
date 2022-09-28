@@ -1,8 +1,10 @@
 package com.roundsToThree.Representations;
 
 import com.roundsToThree.DataProcessing.ByteUtils;
+import com.roundsToThree.Structures.DateTime;
 import com.roundsToThree.Structures.ValueRepresentation;
 
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -33,7 +35,7 @@ public class DateTimeRepresentation extends Representation {
     */
 
     // Class specific variables
-    public ZonedDateTime dateTime;
+    public DateTime[] value;
 
     // The Value Representation of this class
     private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DT;
@@ -46,77 +48,122 @@ public class DateTimeRepresentation extends Representation {
     // Converts raw DateTime value into a easier to use format
     public DateTimeRepresentation(byte[] data) {
         // Basic error checking
-        if (data == null || data.length < 4)
+        if (data == null || data.length == 0)
             return;
 
-        int year = 0;
-        int month = 0;
-        int day = 0;
-        int hour = 0;
-        int minutes = 0;
-        int seconds = 0;
-        int microseconds = 0;
-        int hourOffset = 0;
-        int minuteOffset = 0;
+        // Split on delimiter
+        String[] dateTimes = new String(data, StandardCharsets.UTF_8).split("\\\\");
+        value = new DateTime[dateTimes.length];
 
-        byte[] dateData = new byte[0];
-        byte[] offsetData = new byte[0];
-        // Start by looking for UTC offset
-        for (int i = 0; i < data.length; i++)
-            if (data[i] == '-' || data[i] == '+') {
-                dateData = Arrays.copyOfRange(data, 0, i);
-                offsetData = Arrays.copyOfRange(data, i, data.length);
-                break;
-            }
-        // If no offset was found then use the entire data as dateData
-        if (dateData.length == 0)
-            dateData = data;
+        for (int i = 0; i < dateTimes.length; i++) {
 
-        // Read the year
-        year = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(dateData, 0, 4));
+            // Trim and skip any entries less than 4 long
+            String dateTime = dateTimes[i].trim();
 
-        // Read month
-        if (dateData.length >= 6)
-            month = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(dateData, 4, 6));
-        // Read day
-        if (dateData.length >= 8)
-            day = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(dateData, 6, 8));
-        // Read hour
-        if (dateData.length >= 10)
-            hour = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(dateData, 8, 10));
-        // Read minutes
-        if (dateData.length >= 12)
-            minutes = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(dateData, 10, 12));
-        // Read seconds
-        if (dateData.length >= 14)
-            seconds = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(dateData, 12, 14));
-        // Read microseconds
-        if (dateData.length >= 21)
-            // Exclude decimal point
-            microseconds = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(dateData, 15, 21));
+            int year = 0;
+            int month = 0;
+            int day = 0;
+            int hour = 0;
+            int minutes = 0;
+            int seconds = 0;
+            int microseconds = 0;
+            int hourOffset = 0;
+            int minuteOffset = 0;
 
-        // Now find utc offset
-        if (offsetData.length >= 3)
-            hourOffset = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(offsetData, 0, 3));
+            String dateData;
+            String offsetData = null;
 
-        if (offsetData.length >= 5)
-            minuteOffset = (int) ByteUtils.convertCharactersToLong(Arrays.copyOfRange(offsetData, 3, 5));
+            // Start by looking for UTC offset
+            // Check positive offset
+            String[] tmp = dateTime.split("\\+");
+            if (tmp.length == 1)
+                // Try negative offset
+                tmp = dateTime.split("-");
 
-        dateTime = ZonedDateTime.of(
-                year,
-                Math.max(month, 1),
-                Math.max(day, 1),
-                hour,
-                minutes,
-                seconds,
-                microseconds * 1000,
-                ZoneId.ofOffset("UTC", ZoneOffset.ofHoursMinutes(hourOffset, minuteOffset))
-        );
+            dateData = tmp[0].trim();
+            // If tmp is still only 1 long, then there is no offset data
+            if (tmp.length == 2)
+                offsetData = tmp[1].trim();
+
+            int dateDataLength = dateData.length();
+
+            if (dateDataLength < 4)
+                continue;
+
+            // Read the year
+            year = Integer.parseInt(dateData.substring(0, 4));
+
+            // Read month
+            if (dateDataLength >= 6)
+                month = Integer.parseInt(dateData.substring(4, 6));
+            // Read day
+            if (dateDataLength >= 8)
+                day = Integer.parseInt(dateData.substring(6, 8));
+            // Read hour
+            if (dateDataLength >= 10)
+                hour = Integer.parseInt(dateData.substring(8, 10));
+            // Read minutes
+            if (dateDataLength >= 12)
+                minutes = Integer.parseInt(dateData.substring(10, 12));
+            // Read seconds
+            if (dateDataLength >= 14)
+                seconds = Integer.parseInt(dateData.substring(12, 14));
+            // Read microseconds
+            if (dateDataLength >= 21)
+                // Exclude decimal point
+                microseconds = (int) Integer.parseInt(dateData.substring(15, 21));
+
+            // Now find utc offset
+            int offsetDatalength = -1;
+            if (offsetData != null)
+                offsetDatalength = offsetData.length();
+
+            if (offsetDatalength >= 3)
+                hourOffset = Integer.parseInt(offsetData.substring(0, 3));
+
+            if (offsetDatalength >= 5)
+                minuteOffset = Integer.parseInt(offsetData.substring(3, 5));
+
+            value[i] = new DateTime(ZonedDateTime.of(
+                    year,
+                    Math.max(month, 1),
+                    Math.max(day, 1),
+                    hour,
+                    minutes,
+                    seconds,
+                    microseconds * 1000,
+                    ZoneId.ofOffset("UTC", ZoneOffset.ofHoursMinutes(hourOffset, minuteOffset))
+            ));
+        }
     }
 
     @Override
     public String toString() {
-        return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss.SSSSSSa ZZZZ"));
+        // todo: since just about all of these toString methods are identical, try to merge them into the common class (like the Representation)
+        // this might require having each structure an extension of a class or a generic.
+
+        // No value
+        if (value == null || value.length == 0)
+            return "N/A";
+
+        // One value
+        if (value.length == 1 && value[0] != null)
+            return value[0].toString();
+
+        // Multiple values
+        StringBuilder returnStr = new StringBuilder("[");
+        for (int i = 0; i < value.length; i++) {
+            if (value[i] == null)
+                continue;
+
+            // Prepend a comma if it's not the first item in the array
+            if (i != 0)
+                returnStr.append(", ");
+
+            returnStr.append(value[i].toString());
+        }
+        returnStr.append("]");
+        return returnStr.toString();
     }
 
 }

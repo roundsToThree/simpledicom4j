@@ -68,26 +68,28 @@ public class AgeStringRepresentation extends Representation {
 
     @Override
     public String toString() {
-
+        // No value
         if (value == null || value.length == 0)
             return "N/A";
 
-        String returnString = "";
+        // One value
+        if (value.length == 1 && value[0] != null)
+            return value[0].toString();
 
-        // Account for printing multiple ages
+        // Multiple values
+        StringBuilder returnStr = new StringBuilder("[");
         for (int i = 0; i < value.length; i++) {
+            if (value[i] == null)
+                continue;
 
-            // If its not the first term, prefix each entry with a comma
+            // Prepend a comma if it's not the first item in the array
             if (i != 0)
-                returnString += ", ";
-            returnString += value[i].toString();
+                returnStr.append(", ");
+
+            returnStr.append(value[i].toString());
         }
-
-        // Format the returned result to look like an array if there is more than 1 elements
-        if (value.length > 1)
-            returnString = "[" + returnString + "]";
-
-        return returnString;
+        returnStr.append("]");
+        return returnStr.toString();
 
     }
 
