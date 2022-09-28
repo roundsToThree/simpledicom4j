@@ -4,7 +4,7 @@ import com.roundsToThree.Structures.ValueRepresentation;
 
 import java.nio.charset.StandardCharsets;
 
-public class PersonRepresentation extends Representation {
+public class PersonNameRepresentation extends Representation {
     // Value Representation VR_PN
 
     // Value Representation of this class
@@ -25,7 +25,7 @@ public class PersonRepresentation extends Representation {
     I still dont understand it
      */
 
-    public PersonRepresentation(String familyName, String givenName, String middleName, String prefix, String suffix) {
+    public PersonNameRepresentation(String familyName, String givenName, String middleName, String prefix, String suffix) {
         this.familyName = familyName;
         this.givenName = givenName;
         this.middleName = middleName;
@@ -34,7 +34,7 @@ public class PersonRepresentation extends Representation {
     }
 
     // PersonRepresentation from raw data in VR_PN item
-    public PersonRepresentation(byte[] data) {
+    public PersonNameRepresentation(byte[] data) {
         if (data == null)
             return;
 
@@ -60,7 +60,7 @@ public class PersonRepresentation extends Representation {
 
     @Override
     public String toString() {
-
+        // todo: handle missing name
         String out = "";
         if (familyName != null)
             out += familyName + ", ";

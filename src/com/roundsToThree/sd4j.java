@@ -3,7 +3,7 @@ package com.roundsToThree;
 import com.roundsToThree.Exception.InvalidFileException;
 import com.roundsToThree.FileIO.DICOMLoader;
 import com.roundsToThree.Representations.DateTimeRepresentation;
-import com.roundsToThree.Representations.PersonRepresentation;
+import com.roundsToThree.Representations.PersonNameRepresentation;
 import com.roundsToThree.Representations.Representation;
 
 import java.io.File;
@@ -47,8 +47,8 @@ public class sd4j {
         return elements.get((int) ((groupNumber << 16) | (elementNumber & 0xFFFF)));
     }
 
-    public PersonRepresentation getPatientName() {
-        return (PersonRepresentation) getElementByTagNumber(0x0010, 0x0010);
+    public PersonNameRepresentation getPatientName() {
+        return (PersonNameRepresentation) getElementByTagNumber(0x0010, 0x0010);
     }
 
 

@@ -49,7 +49,7 @@ public class AttributeTagRepresentation extends Representation {
         // Multiple values
         StringBuilder returnStr = new StringBuilder("[");
         for (int i = 0; i < value.length; i++) {
-            // Prepend a comma if its not the first item in the array
+            // Prepend a comma if it's not the first item in the array
             if (i != 0)
                 returnStr.append(", ");
 
