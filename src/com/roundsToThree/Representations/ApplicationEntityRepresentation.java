@@ -1,6 +1,7 @@
 package com.roundsToThree.Representations;
 
 import com.roundsToThree.DataProcessing.StringUtils;
+import com.roundsToThree.Structures.ApplicationEntity;
 import com.roundsToThree.Structures.ValueRepresentation;
 
 import java.nio.charset.StandardCharsets;
@@ -8,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 public class ApplicationEntityRepresentation extends Representation {
 
     // Class specific variables
-    public String value;
+    public ApplicationEntity[] value;
 
     // The Value Representation of this class
     private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_AE;
@@ -17,11 +18,27 @@ public class ApplicationEntityRepresentation extends Representation {
     public ApplicationEntityRepresentation(byte[] data) {
         if (data == null || data.length == 0)
             return;
-        // Convert the data to a string (and trim trailing/leading spaces
-        value = new String(data, StandardCharsets.UTF_8).trim();
 
-        // Cap the string's length at 16 characters
-        value = StringUtils.limitStringLength(value, 16);
+        // Convert the data to a string and split it on the list delimiter
+        String[] rawValues = new String(data, StandardCharsets.UTF_8).split("\\\\");
+        // Trim each raw value and exclude those that become "" (Just spaces)
+        int numberOfValues = 0;
+        for (int i = 0; i < rawValues.length; i++) {
+            // Remove whitespaces, cap length at 16 bytes, then remove any remaining whitespace
+            rawValues[i] = StringUtils.limitStringLength(rawValues[i].trim(), 16).trim();
+            // If the value actually contains data, account for it
+            if (!rawValues[i].equals(""))
+                numberOfValues++;
+        }
+
+        // Copy the values to the class' array
+        value = new ApplicationEntity[numberOfValues];
+        int writeIndex = 0;
+        for (String rawValue : rawValues)
+            if (!rawValue.equals("")) {
+                value[writeIndex] = new ApplicationEntity(rawValue);
+                writeIndex++;
+            }
     }
 
     @Override
@@ -32,6 +49,19 @@ public class ApplicationEntityRepresentation extends Representation {
 
     @Override
     public String toString() {
-        return value;
+        if (value == null || value.length == 0)
+            return "N/A";
+        if (value.length == 1)
+            return value[0].toString();
+
+        // Otherwise is array
+        StringBuilder returnStr = new StringBuilder("[");
+        for (int i = 0; i < value.length; i++) {
+            if (i != 0)
+                returnStr.append(",");
+
+            returnStr.append(value[i].toString());
+        }
+        return returnStr.append("]").toString();
     }
 }

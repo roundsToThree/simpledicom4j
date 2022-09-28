@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.HexFormat;
 
 // Aids in the conversion of byte arrays
+// Note: I just looked at a similar project dcm4che and noticed they use the exact same naming
+// I promise you that its a coincidence and that their source code was not viewed before the writing
+// or starting of this project
 public class ByteUtils {
 
     public static int intFrom16Bit(byte[] arr) {
