@@ -38,11 +38,17 @@ System.out.println(sd.getPatientName());
 
 > Smith, Mr James
 ```
-\
 
 **Images not yet ready for display**
+
+
+# Performance
+Benchmarked on Intel i5-10210U CPU @ 1.60GHz running inside Virtual Machine \
+DICOM file is a sample Xray Angiogram from the internet (forgot the link) \
 \
-\
+Time taken to load DICOM file: ~600ms \
+Memory Footprint             : ~10MiB 
+
 This is my first public Java package, please excuse any bad stylistic choices (and let me know how I can improve) as I haven't learnt Java from an educational institution but rather from trial and error in 
 <a href="https://processing.org">Processing</a>.
 \
