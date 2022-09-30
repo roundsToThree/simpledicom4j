@@ -10,7 +10,7 @@ public class DateRepresentation extends Representation {
     public Date[] value;
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DA;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DA;
 
     // Create DateRepresentation from VR_DA byte content
     public DateRepresentation(byte[] data) {
@@ -38,29 +38,4 @@ public class DateRepresentation extends Representation {
         return valueRepresentation;
     }
 
-    @Override
-    public String toString() {
-        // No value
-        if (value == null || value.length == 0)
-            return "N/A";
-
-        // One value
-        if (value.length == 1 && value[0] != null)
-            return value[0].toString();
-
-        // Multiple values
-        StringBuilder returnStr = new StringBuilder("[");
-        for (int i = 0; i < value.length; i++) {
-            if (value[i] == null)
-                continue;
-
-            // Prepend a comma if it's not the first item in the array
-            if (i != 0)
-                returnStr.append(", ");
-
-            returnStr.append(value[i].toString());
-        }
-        returnStr.append("]");
-        return returnStr.toString();
-    }
 }

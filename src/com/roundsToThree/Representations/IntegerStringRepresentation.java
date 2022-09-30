@@ -10,7 +10,7 @@ public class IntegerStringRepresentation extends Representation {
     public int value = 0;
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_IS;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_IS;
 
     // Converts a byte array of VR_IS type to IntegerString
     public IntegerStringRepresentation(byte[] data) {

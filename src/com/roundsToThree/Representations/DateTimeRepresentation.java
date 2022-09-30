@@ -38,7 +38,7 @@ public class DateTimeRepresentation extends Representation {
     public DateTime[] value;
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DT;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DT;
 
     @Override
     public ValueRepresentation getValueRepresentation() {
@@ -137,33 +137,5 @@ public class DateTimeRepresentation extends Representation {
         }
     }
 
-    @Override
-    public String toString() {
-        // todo: since just about all of these toString methods are identical, try to merge them into the common class (like the Representation)
-        // this might require having each structure an extension of a class or a generic.
-
-        // No value
-        if (value == null || value.length == 0)
-            return "N/A";
-
-        // One value
-        if (value.length == 1 && value[0] != null)
-            return value[0].toString();
-
-        // Multiple values
-        StringBuilder returnStr = new StringBuilder("[");
-        for (int i = 0; i < value.length; i++) {
-            if (value[i] == null)
-                continue;
-
-            // Prepend a comma if it's not the first item in the array
-            if (i != 0)
-                returnStr.append(", ");
-
-            returnStr.append(value[i].toString());
-        }
-        returnStr.append("]");
-        return returnStr.toString();
-    }
 
 }

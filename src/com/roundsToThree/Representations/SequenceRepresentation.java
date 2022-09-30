@@ -10,7 +10,7 @@ public class SequenceRepresentation extends Representation {
     ;
 
     // Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_SQ;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_SQ;
 
     public SequenceRepresentation() {
 
@@ -21,6 +21,7 @@ public class SequenceRepresentation extends Representation {
         return valueRepresentation;
     }
 
+    // A special to string method for listing in a tree like structure
     @Override
     public String toString() {
         StringBuilder returnString = new StringBuilder();

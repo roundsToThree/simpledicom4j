@@ -8,7 +8,7 @@ public class PersonNameRepresentation extends Representation {
     // Value Representation VR_PN
 
     // Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_PN;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_PN;
 
     public String familyName;
     public String givenName;

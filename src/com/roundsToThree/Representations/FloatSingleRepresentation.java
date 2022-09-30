@@ -9,7 +9,7 @@ public class FloatSingleRepresentation extends Representation {
     public float value = 0;
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_FL;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_FL;
 
     // Converts a byte array of VR_FL type to Float Single
     public FloatSingleRepresentation(byte[] data) {

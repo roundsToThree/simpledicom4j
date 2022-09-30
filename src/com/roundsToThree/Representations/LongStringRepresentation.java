@@ -10,7 +10,7 @@ public class LongStringRepresentation extends Representation {
     public long value = 0;
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_IS;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_IS;
 
     // Converts a byte array of VR_LO type to LongString
     public LongStringRepresentation(byte[] data) {

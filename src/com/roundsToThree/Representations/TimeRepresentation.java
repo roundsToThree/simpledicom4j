@@ -13,7 +13,7 @@ public class TimeRepresentation extends Representation {
     public long microseconds = 0;
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_TM;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_TM;
 
 
     // Format : HHMMSS.FFFFFF

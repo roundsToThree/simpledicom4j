@@ -64,7 +64,6 @@ public class DICOMLoader {
                 data = reader.readNBytes(2);
                 int elementNumber = ByteUtils.intFrom16Bit(data);
 
-                System.out.format("%04x, %04x\n", groupNumber, elementNumber);
 
                 // If reading has reached the end of a sequence item, this will break out of it
                 if (
@@ -145,7 +144,6 @@ public class DICOMLoader {
                 // Compile tag and put in hashmap
 
                 Representation tag = createRepresentationFromTag(valueRepresentation, value);
-
 
 //                System.out.println(String.format("(%04X,%04X) Type: %s", groupNumber, elementNumber, valueRepresentation.toDetailedString()));
 

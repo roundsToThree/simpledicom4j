@@ -1,6 +1,7 @@
 package com.roundsToThree.Representations;
 
 import com.roundsToThree.DataProcessing.StringUtils;
+import com.roundsToThree.Structures.DecimalString;
 import com.roundsToThree.Structures.ValueRepresentation;
 
 import java.nio.charset.StandardCharsets;
@@ -8,10 +9,10 @@ import java.nio.charset.StandardCharsets;
 public class DecimalStringRepresentation extends Representation {
 
     // Class specific variables
-    public double[] values = new double[0];
+    public DecimalString[] value = new DecimalString[0];
 
     // The Value Representation of this class
-    private static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DS;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_DS;
 
     // Converts a byte array of VR_DS type to DecimalString
     public DecimalStringRepresentation(byte[] data) {
@@ -21,35 +22,19 @@ public class DecimalStringRepresentation extends Representation {
         if (data == null || data.length == 0)
             return;
 
-        // Iterate through every number
-        String text = StringUtils.limitStringLength(new String(data, StandardCharsets.UTF_8).trim(), 16);
-        String[] numbers = text.split("\\\\");
-        values = new double[numbers.length];
+        // Split on demlimiter
+        String[] numbers = new String(data, StandardCharsets.UTF_8).split("\\\\");
+
+        value = new DecimalString[numbers.length];
         for (int i = 0; i < numbers.length; i++)
-            values[i] = Double.parseDouble(numbers[i].trim());
+            // Iterate through every number (limit at 16 chars and trim whitespace)
+            value[i] = new DecimalString(Double.parseDouble(StringUtils.limitStringLength(numbers[i].trim(), 16).trim()));
+
     }
 
     @Override
     public ValueRepresentation getValueRepresentation() {
         return valueRepresentation;
-    }
-
-    @Override
-    public String toString() {
-        if (values == null || values.length == 0)
-            return "N/A";
-        if (values.length == 1)
-            return Double.toString(values[0]);
-
-        // Otherwise multiple values
-        StringBuilder returnString = new StringBuilder("[");
-        for (int i = 0; i < values.length; i++) {
-            returnString.append(Double.toString(values[i]));
-            if (i != values.length - 1)
-                returnString.append(", ");
-        }
-        return returnString + "]";
-
     }
 
 
