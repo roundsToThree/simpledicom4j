@@ -15,4 +15,16 @@ public class StringUtils {
         return input;
     }
 
+    public static String trimTrailing(String input) {
+        if (input == null)
+            return null;
+
+        // Work from the end backwards
+        int currentIndex = input.length() - 1;
+        while (input.indexOf(' ', currentIndex) == currentIndex)
+            currentIndex--;
+
+        return input.substring(0, currentIndex + 1);
+    }
+
 }

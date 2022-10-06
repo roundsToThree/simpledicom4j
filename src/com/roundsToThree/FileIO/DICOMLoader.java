@@ -195,9 +195,16 @@ public class DICOMLoader {
             case ValueRepresentation.VR_IS -> {
                 return new IntegerStringRepresentation(value);
             }
-//            case ValueRepresentation.VR_LO -> {
-//                return new LongStringRepresentation(value);
-//            }
+            case ValueRepresentation.VR_LO -> {
+                return new LongStringRepresentation(value);
+            }
+            case ValueRepresentation.VR_LT -> {
+                return new LongTextRepresentation(value);
+            }
+            case ValueRepresentation.VR_OB -> {
+                return new OtherByteRepresentation(value);
+            }
+
             case ValueRepresentation.VR_PN -> {
                 return new PersonNameRepresentation(value);
             }
