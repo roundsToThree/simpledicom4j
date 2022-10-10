@@ -204,7 +204,12 @@ public class DICOMLoader {
             case ValueRepresentation.VR_OB -> {
                 return new OtherByteRepresentation(value);
             }
-
+            case ValueRepresentation.VR_OD -> {
+                return new OtherDoubleRepresentation(value);
+            }
+            case ValueRepresentation.VR_OF -> {
+                return new OtherFloatRepresentation(value);
+            }
             case ValueRepresentation.VR_PN -> {
                 return new PersonNameRepresentation(value);
             }

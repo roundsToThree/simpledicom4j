@@ -1,14 +1,14 @@
 package com.roundsToThree.Structures;
 
-public class OtherDouble {
-    double value;
+public class OtherFloat {
+    float value;
 
-    public OtherDouble(double value) {
+    public OtherFloat(float value) {
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return Double.toString(value);
+        return Float.toString(value);
     }
 }

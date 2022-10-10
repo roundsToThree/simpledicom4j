@@ -28,7 +28,6 @@ public class ByteUtils {
                         ((arr[3] & 0xFFL) << 24);
     }
 
-
     // Returns the point in a byte array that another byte array exists
     // takes a source, array to check for, and an index to start at
     public static int indexOfByteSequence(byte[] data, byte[] sequence, int start) {
