@@ -14,7 +14,7 @@ public class OtherFloatRepresentation extends Representation {
     // The Value Representation of this class
     public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_OF;
 
-    // Converts an byte array of OD VR into an array of Other Doubles
+    // Converts an byte array of OF VR into an array of Other Floats
     public OtherFloatRepresentation(byte[] data) {
         if (data == null || data.length == 0)
             return;

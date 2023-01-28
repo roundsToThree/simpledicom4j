@@ -15,17 +15,23 @@ import java.util.HexFormat;
 public class ByteUtils {
 
     public static int intFrom16Bit(byte[] arr) {
+        // This doesn't work, im not entirely sure why? Its been a few months since i checked the spec
+//        return ByteBuffer.wrap(arr).order(ByteOrder.LITTLE_ENDIAN).getShort();
+//
         return
                 ((arr[0] & 0xFF)) |
                         ((arr[1] & 0xFF) << 8);
     }
 
     public static long longFrom32Bit(byte[] arr) {
-        return
-                ((arr[0] & 0xFFL)) |
-                        ((arr[1] & 0xFFL) << 8) |
-                        ((arr[2] & 0xFFL) << 16) |
-                        ((arr[3] & 0xFFL) << 24);
+//        System.out.println(Arrays.toString(arr))
+        return ByteBuffer.wrap(arr).order(ByteOrder.LITTLE_ENDIAN).getInt();
+//
+//        return
+//                ((arr[0] & 0xFFL)) |
+//                        ((arr[1] & 0xFFL) << 8) |
+//                        ((arr[2] & 0xFFL) << 16) |
+//                        ((arr[3] & 0xFFL) << 24);
     }
 
     // Returns the point in a byte array that another byte array exists
@@ -111,4 +117,12 @@ public class ByteUtils {
         return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getDouble();
     }
 
+    // Get a long from a sequence of 4 bytes (LittleEndian)
+//    public static long longFrom32Bit(byte[] data) {
+//        return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getInt();
+//    }
+    // Get a long from a sequence of 8 bytes
+    public static long longFrom64Bit(byte[] data) {
+        return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getLong();
+    }
 }
