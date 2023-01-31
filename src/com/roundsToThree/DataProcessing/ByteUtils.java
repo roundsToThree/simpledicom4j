@@ -24,7 +24,6 @@ public class ByteUtils {
     }
 
     public static long longFrom32Bit(byte[] arr) {
-//        System.out.println(Arrays.toString(arr))
         return ByteBuffer.wrap(arr).order(ByteOrder.LITTLE_ENDIAN).getInt();
 //
 //        return
@@ -117,12 +116,14 @@ public class ByteUtils {
         return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getDouble();
     }
 
-    // Get a long from a sequence of 4 bytes (LittleEndian)
-//    public static long longFrom32Bit(byte[] data) {
-//        return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getInt();
-//    }
     // Get a long from a sequence of 8 bytes
     public static long longFrom64Bit(byte[] data) {
         return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getLong();
     }
+
+    // Get a word from a sequence of 2 bytes
+    public static short wordFrom16Bit(byte[] data) {
+        return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getShort();
+    }
+
 }

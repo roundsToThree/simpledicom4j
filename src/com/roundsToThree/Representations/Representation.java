@@ -32,9 +32,9 @@ public class Representation {
                 if (val.length == 1 && val[0] != null)
                     return val[0].toString();
 
-                // Multiple values
+                // Multiple values (Truncate to 11)
                 StringBuilder returnStr = new StringBuilder("[");
-                for (int i = 0; i < val.length; i++) {
+                for (int i = 0; i < Math.min(val.length, 10); i++) {
                     if (val[i] == null)
                         continue;
 
@@ -44,6 +44,13 @@ public class Representation {
 
                     returnStr.append(val[i].toString());
                 }
+                if (val.length > 10) {
+                    returnStr.append(", ... " + Integer.toString(val.length - 11) + " more entries ... , ");
+                    returnStr.append(val[val.length - 1].toString());
+                }
+
+
+                //todo fijnsih truncat
                 returnStr.append("]");
                 return returnStr.toString();
 

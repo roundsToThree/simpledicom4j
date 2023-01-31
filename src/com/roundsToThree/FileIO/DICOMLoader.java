@@ -216,6 +216,9 @@ public class DICOMLoader {
             case ValueRepresentation.VR_OV -> {
                 return new OtherVeryLongRepresentation(value);
             }
+            case ValueRepresentation.VR_OW -> {
+                return new OtherWordRepresentation(value);
+            }
             case ValueRepresentation.VR_PN -> {
                 return new PersonNameRepresentation(value);
             }
@@ -242,9 +245,7 @@ public class DICOMLoader {
                     (dataLength == -1 && reader.available() > 0) ||
                             (dataLength != -1 && bytesRead < dataLength)
             ) {
-                System.out.print(reader.available());
-                System.out.print(" , ");
-                System.out.println(dataLength);
+
                 // Check if the start of the item is actually the end of a SEQUENCE
                 byte[] itemHeader = reader.readNBytes(4);
                 bytesRead += 4;
