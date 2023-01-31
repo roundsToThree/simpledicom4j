@@ -222,6 +222,9 @@ public class DICOMLoader {
             case ValueRepresentation.VR_PN -> {
                 return new PersonNameRepresentation(value);
             }
+            case ValueRepresentation.VR_SS -> {
+                return new ShortStringRepresentation(value);
+            }
 
 
             case ValueRepresentation.VR_TM -> {
