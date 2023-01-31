@@ -49,8 +49,6 @@ public class Representation {
                     returnStr.append(val[val.length - 1].toString());
                 }
 
-
-                //todo fijnsih truncat
                 returnStr.append("]");
                 return returnStr.toString();
 

@@ -1,20 +1,19 @@
 package com.roundsToThree.Representations;
 
+import com.roundsToThree.Structures.PersonName;
 import com.roundsToThree.Structures.ValueRepresentation;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class PersonNameRepresentation extends Representation {
-    // Value Representation VR_PN
+
+    // Class specific variables
+    public PersonName[] value;
+
 
     // Value Representation of this class
     public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_PN;
-
-    public String familyName;
-    public String givenName;
-    public String middleName;
-    public String prefix;
-    public String suffix;
 
     /*
     Note:
@@ -25,32 +24,30 @@ public class PersonNameRepresentation extends Representation {
     I still dont understand it
      */
 
-    public PersonNameRepresentation(String familyName, String givenName, String middleName, String prefix, String suffix) {
-        this.familyName = familyName;
-        this.givenName = givenName;
-        this.middleName = middleName;
-        this.prefix = prefix;
-        this.suffix = suffix;
-    }
-
     // PersonRepresentation from raw data in VR_PN item
     public PersonNameRepresentation(byte[] data) {
         if (data == null)
             return;
 
         // todo: support alternate charsets that the DICOM spec supports
-        String name = new String(data, StandardCharsets.UTF_8);
-        String[] segments = name.trim().split("\\^");
-        if (segments.length > 0)
-            familyName = segments[0];
-        if (segments.length > 1)
-            givenName = segments[1];
-        if (segments.length > 2)
-            middleName = segments[2];
-        if (segments.length > 3)
-            prefix = segments[3];
-        if (segments.length > 4)
-            suffix = segments[4];
+        String[] contents = new String(data, StandardCharsets.UTF_8).split("\\\\");
+        value = new PersonName[contents.length];
+
+        // Create a PersonName for each content
+        for (int i = 0; i < contents.length; ++i) {
+            // Force there to be 5 segments, Only the first segment is non optional and for a 3rd segment, the 2nd one must be given name.
+            String[] segments = Arrays.copyOf(contents[i].trim().split("\\^"), 5);
+            // Segment order
+            // FamilyName, GivenName, MiddleName, Prefix, Suffix
+
+            value[i] = new PersonName(
+                    segments[3], // Prefix
+                    segments[1], // GivenName
+                    segments[2], // MiddleName
+                    segments[0], // FamilyName
+                    segments[4]  // Suffix
+            );
+        }
     }
 
     @Override
@@ -58,27 +55,5 @@ public class PersonNameRepresentation extends Representation {
         return valueRepresentation;
     }
 
-    @Override
-    public String toString() {
-        // todo: handle missing name
-        String out = "";
-        if (familyName != null)
-            out += familyName + ", ";
-        if (prefix != null)
-            out += prefix + " ";
-        if (givenName != null) {
-            out += givenName;
-            // only add space if there will be a middle name
-            // too, this way the suffix wont have a space in
-            // front of the comma
-            if (middleName != null)
-                out += " ";
-        }
-        if (middleName != null)
-            out += middleName;
-        if (suffix != null)
-            out += ", " + suffix;
 
-        return out;
-    }
 }
