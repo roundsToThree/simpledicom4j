@@ -235,9 +235,7 @@ public class DICOMLoader {
                 return new ShortTextRepresentation(value);
             }
             case ValueRepresentation.VR_SV -> {
-                System.out.println("!!!!!!!!!!SIGNED VERYLONG");
-                return new Representation();
-
+                return new SignedVeryLongRepresentation(value);
             }
 
 
