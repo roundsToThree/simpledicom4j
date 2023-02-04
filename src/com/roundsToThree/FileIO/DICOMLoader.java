@@ -225,18 +225,19 @@ public class DICOMLoader {
             case ValueRepresentation.VR_SH -> {
                 return new ShortStringRepresentation(value);
             }
-
             case ValueRepresentation.VR_SL -> {
                 return new SignedLongRepresentation(value);
+            }
+            case ValueRepresentation.VR_SS -> {
+                return new SignedShortRepresentation(value);
+            }
+            case ValueRepresentation.VR_ST -> {
+                return new ShortTextRepresentation(value);
             }
             case ValueRepresentation.VR_SV -> {
                 System.out.println("!!!!!!!!!!SIGNED VERYLONG");
                 return new Representation();
 
-            }
-            case ValueRepresentation.VR_SS -> {
-                System.out.println("!!!!!!!!!!SIGNED Short");
-                return new Representation();
             }
 
 
