@@ -11,10 +11,9 @@ public class ShortStringRepresentation extends Representation {
     public ShortString[] value;
 
     // The Value Representation of this class
-    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_SS;
+    public static final ValueRepresentation valueRepresentation = ValueRepresentation.VALUE_REPRESENTATION_SH;
 
-    // Converts an byte array of SS VR into an array of Short Strings
-    // todo: confirm this is how short strings are treated
+    // Converts an byte array of SH VR into an array of Short Strings
     public ShortStringRepresentation(byte[] data) {
         if (data == null || data.length == 0)
             return;

@@ -142,11 +142,11 @@ public class DICOMLoader {
 
 
                 // Compile tag and put in hashmap
-
                 Representation tag = createRepresentationFromTag(valueRepresentation, value);
+                System.out.println(groupNumber);
+                System.out.println(elementNumber);
 
-//                System.out.println(String.format("(%04X,%04X) Type: %s", groupNumber, elementNumber, valueRepresentation.toDetailedString()));
-
+                System.out.println(String.format("(%04X,%04X) Type: %s", groupNumber, elementNumber, valueRepresentation.toDetailedString()));
 
                 // Push it to the hashmap (index is the groupNo. elemnetNo.)
                 int ind = (int) ((groupNumber << 16) | (elementNumber & 0xFFFF));
@@ -222,8 +222,40 @@ public class DICOMLoader {
             case ValueRepresentation.VR_PN -> {
                 return new PersonNameRepresentation(value);
             }
-            case ValueRepresentation.VR_SS -> {
+            case ValueRepresentation.VR_SH -> {
                 return new ShortStringRepresentation(value);
+            }
+
+            case ValueRepresentation.VR_SL -> {
+                return new SignedLongRepresentation(value);
+            }
+            case ValueRepresentation.VR_SV -> {
+                System.out.println("!!!!!!!!!!SIGNED VERYLONG");
+                return new Representation();
+
+            }
+            case ValueRepresentation.VR_SS -> {
+                System.out.println("!!!!!!!!!!SIGNED Short");
+                return new Representation();
+            }
+
+
+            case ValueRepresentation.VR_UL -> {
+                System.out.println("!!!!!!!!!!UNSIGNED Long");
+                return new Representation();
+            }
+
+            case ValueRepresentation.VR_US -> {
+                System.out.println("!!!!!!!!!!UNSIGNED Short");
+                System.out.println(Arrays.toString(value));
+                System.out.println(Short.toUnsignedInt(ByteUtils.wordFrom16Bit(value)));
+
+                return new Representation();
+            }
+
+            case ValueRepresentation.VR_UV -> {
+                System.out.println("!!!!!!!!!!UNSIGNED Very long");
+                return new Representation();
             }
 
 

@@ -26,7 +26,7 @@ public class TestSD4J {
             sd4j sd = sd4j.loadSlice(new File("000"));
             System.out.println(System.currentTimeMillis() - s);
 //            System.out.println(Long.toBinaryString(-21213));
-//            ByteBuffer bytes = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(-21213);
+            ByteBuffer bytes = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(-3);
 
 //            byte[] t = bytes.array();
 
@@ -53,6 +53,8 @@ public class TestSD4J {
 
 
             System.out.println(sq);
+//            byte[] b = {,};
+            System.out.println(Arrays.toString(bytes.array()));
 
 
 //            Thread.sleep(2000);
